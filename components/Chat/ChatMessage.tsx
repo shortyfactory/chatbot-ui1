@@ -133,7 +133,7 @@ export const ChatMessage: FC<Props> = memo(({ message, messageIndex, onEdit }) =
                 <div className="min-w-[40px] text-right font-bold">
                     {message.role === 'assistant' ? (
                         <Image
-                            src={}
+                            src={logoImage}
                             alt="AI Chatbot"
                             width="30"
                             style={{
