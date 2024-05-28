@@ -81,62 +81,6 @@ export const initialState: HomeInitialState = {
         'specified aspect': 'Enter the additional aspect...',
       },
     },
-    {
-      id: '3',
-      name: 'Textblock Merging',
-      description: 'Amalgamation of various textblocks',
-      content: 'Combine the {{provided text}} text blocks into a cohesive piece, ensuring smooth transitions and a unified theme focused on {{specified theme}}. In addition, elaborate on the following aspects {{describe aspect}}.',
-      model: {
-        id: 'gpt-4',
-        name: 'GPT-4',
-        maxLength: 2048, // Example value, adjust as needed
-        tokenLimit: 4096, // Example value, adjust as needed
-      },
-      folderId: '0',
-      disableActions: true,
-      placeholders: { // Add custom placeholders here
-        'provided text': 'Enter the text blocks to merge...',
-        'target language': 'Describe the special theme to focus ...',
-        'specified aspect': 'Enter the additional aspect...',
-      },
-    },    
-    {
-      id: '4',
-      name: 'Format - Table',
-      description: 'Restructure outputs text to table',
-      content: 'Restructure the {{provided text}} into a table format. It has {{number of columns}} columns with the following titles {{columns title separate by a coma}}.',
-      model: {
-        id: 'gpt-4',
-        name: 'GPT-4',
-        maxLength: 2048, // Example value, adjust as needed
-        tokenLimit: 4096, // Example value, adjust as needed
-      },
-      folderId: '0',
-      disableActions: true,
-      placeholders: { // Add custom placeholders here
-        'provided text': 'Enter the text to restructure...',
-        'number of columns': 'Enter the number of columns...',
-        'columns title separate by a coma': 'Enter the title of the columns...',
-      },
-    },    
-    {
-      id: '5',
-      name: 'Format - Bulletpoints',
-      description: 'Restructure outputs text to bullet points for slide',
-      content: 'Please rewrite the {{provided text}} in {{number of bullet-points}} bullet-points.',
-      model: {
-        id: 'gpt-4',
-        name: 'GPT-4',
-        maxLength: 2048, // Example value, adjust as needed
-        tokenLimit: 4096, // Example value, adjust as needed
-      },
-      folderId: '0',
-      disableActions: true,
-      placeholders: { // Add custom placeholders here
-        'provided text': 'Enter the text to restructure...',
-        'number of bullet-points': 'Enter the number of bullet-points...',
-      },
-    }, 
     // More prompts...
   ],
   temperature: 0.7,
