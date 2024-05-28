@@ -131,7 +131,7 @@ setLoading(false);
             onSubmit={view === 'sign-in' ? handleSignIn : view === 'sign-in-magic' ? handleSignInWithMagicLink : handleSignUp}
           >
 
-            <div style={{textAlign: 'center', color: '#424141', fontSize: '32px', marginBottom: '24px' }}> AI Chatbot </div>
+            <div style={{textAlign: 'center', color: '#424141', fontSize: '32px', marginBottom: '24px' }}> AI Chatbot 1 </div>
 
             
             <div className="flex justify-center mb-12">
