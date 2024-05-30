@@ -16,8 +16,8 @@ ENV DEFAULT_MODEL="gpt-4"
 ENV NEXT_PUBLIC_DEFAULT_SYSTEM_PROMPT="You are ChatGPT, a large language model trained by OpenAI. Follow the user\'s instructions carefully. Respond using markdown."
 
 # Supabase
-ENV NEXT_PUBLIC_SUPABASE_URL="https://wvtiyosxoygpihzbehhk.supabase.co"
-ENV NEXT_PUBLIC_SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Ind2dGl5b3N4b3lncGloemJlaGhrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTY4NTM0NzMsImV4cCI6MjAzMjQyOTQ3M30.5H1jJfwT-RkKsEbYxsUx0SvkmLK5JKM5k3Si0uzHvb4"
+ENV NEXT_PUBLIC_SUPABASE_URL="https://nhrevgrugfgtbxdaeyqy.supabase.co"
+ENV NEXT_PUBLIC_SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5ocmV2Z3J1Z2ZndGJ4ZGFleXF5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTY5MTYxODIsImV4cCI6MjAzMjQ5MjE4Mn0.RooyEV7Fn4rtW8CLNEFSzcZFX3Mel9rjvUOmGfa68w0"
 
 RUN npm run build
 
