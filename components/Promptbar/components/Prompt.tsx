@@ -1,8 +1,8 @@
 import {
   IconBulbFilled,
   IconCheck,
-  IconTrash,
   IconPencil,
+  IconTrash,
   IconX,
 } from '@tabler/icons-react';
 import {
@@ -14,6 +14,8 @@ import {
 } from 'react';
 
 import { Prompt } from '@/types/prompt';
+
+import HomeContext from '@/pages/api/home/home.context';
 
 import SidebarActionButton from '@/components/Buttons/SidebarActionButton';
 
@@ -30,7 +32,7 @@ export const PromptComponent = ({ prompt }: Props) => {
     handleUpdatePrompt,
     handleDeletePrompt,
   } = useContext(PromptbarContext);
-
+  const { dispatch: homeDispatch } = useContext(HomeContext);
 
   const [showModal, setShowModal] = useState<boolean>(false);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -68,8 +70,7 @@ export const PromptComponent = ({ prompt }: Props) => {
       e.dataTransfer.setData('prompt', JSON.stringify(prompt));
     }
   };
-  
-  
+
   useEffect(() => {
     if (isRenaming) {
       setIsDeleting(false);
@@ -84,9 +85,8 @@ export const PromptComponent = ({ prompt }: Props) => {
         className="flex w-full items-center gap-3 rounded-lg p-3 text-sm transition-colors duration-200 hover:bg-[#343541]/90"
         draggable="true"
         onClick={(e) => {
-          console.log(e);
-          //e.stopPropagation();
-          //setShowModal(true);
+          e.stopPropagation();
+          homeDispatch({ field: 'inputContent', value: prompt.name });
         }}
         onDragStart={(e) => handleDragStart(e, prompt)}
         onMouseLeave={() => {

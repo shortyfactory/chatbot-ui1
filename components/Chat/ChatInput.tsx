@@ -48,28 +48,39 @@ export const ChatInput = ({
   const { t } = useTranslation('chat');
 
   const {
-    state: { selectedConversation, messageIsStreaming, prompts },
+    state: {
+      selectedConversation,
+      messageIsStreaming,
+      prompts,
+      inputContent: content,
+    },
 
     dispatch: homeDispatch,
   } = useContext(HomeContext);
 
-  const [content, setContent] = useState<string>();
   const [isTyping, setIsTyping] = useState<boolean>(false);
   const [showPromptList, setShowPromptList] = useState(false);
   const [activePromptIndex, setActivePromptIndex] = useState(0);
   const [promptInputValue, setPromptInputValue] = useState('');
   const [variables, setVariables] = useState<string[]>([]);
-  const [variables2, setVariables2] = useState<Array<{name: string, value: string}>>([]);
+  const [variables2, setVariables2] = useState<
+    Array<{ name: string; value: string }>
+  >([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [showPluginSelect, setShowPluginSelect] = useState(false);
   const [plugin, setPlugin] = useState<Plugin | null>(null);
 
   const promptListRef = useRef<HTMLUListElement | null>(null);
-  const [isSelectingExistingPrompt, setIsSelectingExistingPrompt] = useState(false);
-  
+  const [isSelectingExistingPrompt, setIsSelectingExistingPrompt] =
+    useState(false);
+
   const filteredPrompts = prompts.filter((prompt) =>
     prompt.name.toLowerCase().includes(promptInputValue.toLowerCase()),
   );
+
+  const setContent = (content: string) => {
+    homeDispatch({ field: 'inputContent', value: content });
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
@@ -91,22 +102,23 @@ export const ChatInput = ({
 
   const handleSend = () => {
     if (messageIsStreaming) {
-        return;
+      return;
     }
 
     if (!content) {
-        alert(t('Please enter a message'));
-        return;
+      alert(t('Please enter a message'));
+      return;
     }
 
     const isNewPrompt = !isSelectingExistingPrompt && !variables.length;
+    
     onSend({ role: 'user', content, isNewPrompt, variables2 }, plugin);
     setContent('');
     setPlugin(null);
     setIsSelectingExistingPrompt(false);
 
     if (window.innerWidth < 640 && textareaRef && textareaRef.current) {
-        textareaRef.current.blur();
+      textareaRef.current.blur();
     }
   };
 
@@ -128,13 +140,9 @@ export const ChatInput = ({
   const handleInitModal = () => {
     const selectedPrompt = filteredPrompts[activePromptIndex];
     if (selectedPrompt) {
-      setContent((prevContent) => {
-        const newContent = prevContent?.replace(
-          /\/\w*$/,
-          selectedPrompt.content,
-        );
-        return newContent;
-      });
+      const newContent = content?.replace(/\/\w*$/, selectedPrompt.content);
+      setContent(newContent);
+
       handlePromptSelect(selectedPrompt);
     }
     setShowPromptList(false);
@@ -176,15 +184,17 @@ export const ChatInput = ({
   };
 
   const parseVariables = (content: string) => {
-   const regex = /{{(.*?)}}/g;
+    const regex = /{{(.*?)}}/g;
     const foundVariables: string[] = [];
     let match;
 
     while ((match = regex.exec(content)) !== null) {
-        foundVariables.push(match[1]);
+      foundVariables.push(match[1]);
     }
 
-    setVariables2(foundVariables.map(variable => ({ name: variable, value: '' })));
+    setVariables2(
+      foundVariables.map((variable) => ({ name: variable, value: '' })),
+    );
     return foundVariables;
   };
 
@@ -201,40 +211,39 @@ export const ChatInput = ({
   }, []);
 
   const handlePromptSelect = (prompt: Prompt) => {
+    setContent(prompt.content);
     const parsedVariables = parseVariables(prompt.content);
     setVariables(parsedVariables);
 
     if (parsedVariables.length > 0) {
       setIsModalVisible(true);
     } else {
-      setContent((prevContent) => {
-        const updatedContent = prevContent?.replace(/\/\w*$/, prompt.content);
-        return updatedContent;
-      });
+      const updatedContent = content?.replace(/\/\w*$/, prompt.content);
+      setContent(updatedContent);
       updatePromptListVisibility(prompt.content);
     }
   };
 
-const handleSubmit = (updatedVariables: string[]) => {
+  const handleSubmit = (updatedVariables: string[]) => {
     const newContent = content?.replace(/{{(.*?)}}/g, (match, variable) => {
-        const index = variables.indexOf(variable);
-        return updatedVariables[index];
+      const index = variables.indexOf(variable);
+      return updatedVariables[index];
     });
 
     setContent(newContent);
 
     const updatedVariables2 = variables.map((variable, index) => ({
-        name: variable,
-        value: updatedVariables[index],
+      name: variable,
+      value: updatedVariables[index],
     }));
 
     setVariables2(updatedVariables2);
 
     if (textareaRef && textareaRef.current) {
-        textareaRef.current.focus();
+      textareaRef.current.focus();
     }
-};
-  
+  };
+
   useEffect(() => {
     if (promptListRef.current) {
       promptListRef.current.scrollTop = activePromptIndex * 30;
@@ -248,6 +257,13 @@ const handleSubmit = (updatedVariables: string[]) => {
       textareaRef.current.style.overflow = `${
         textareaRef?.current?.scrollHeight > 400 ? 'auto' : 'hidden'
       }`;
+    }
+    const prompt = filteredPrompts.find(
+      (prompt) => prompt.name.toLowerCase() === content.toLowerCase(),
+    );
+
+    if (prompt) {
+      handlePromptSelect(prompt);
     }
   }, [content]);
 
@@ -321,7 +337,7 @@ const handleSubmit = (updatedVariables: string[]) => {
                 }}
               />
             </div>
-          )}    
+          )}
 
           <textarea
             ref={textareaRef}
@@ -349,7 +365,7 @@ const handleSubmit = (updatedVariables: string[]) => {
 
           <button
             className="absolute right-2 top-2 rounded-sm p-1 text-neutral-800 opacity-60 hover:bg-neutral-200 hover:text-neutral-900 dark:bg-opacity-50 dark:text-neutral-100 dark:hover:text-neutral-200"
-            style={{color: '#fecc00' }}
+            style={{ color: '#fecc00' }}
             onClick={handleSend}
           >
             {messageIsStreaming ? (
@@ -399,8 +415,7 @@ const handleSubmit = (updatedVariables: string[]) => {
           target="_blank"
           rel="noreferrer"
           className="underline"
-        >
-        </a>
+        ></a>
       </div>
     </div>
   );
