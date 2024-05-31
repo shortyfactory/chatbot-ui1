@@ -114,6 +114,7 @@ export const ChatInput = ({
     
     onSend({ role: 'user', content, isNewPrompt, variables2 }, plugin);
     setContent('');
+    setVariables2([]);
     setPlugin(null);
     setIsSelectingExistingPrompt(false);
 
