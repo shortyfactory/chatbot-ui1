@@ -24,11 +24,11 @@ export interface HomeInitialState {
   currentFolder: FolderInterface | undefined;
   messageError: boolean;
   searchTerm: string;
+  inputContent: string;
   defaultModelId: OpenAIModelID | undefined;
   serverSideApiKeyIsSet: boolean;
   serverSidePluginKeysSet: boolean;
 }
-
 
 export const initialState: HomeInitialState = {
   apiKey: '',
@@ -38,16 +38,21 @@ export const initialState: HomeInitialState = {
   messageIsStreaming: false,
   modelError: null,
   models: [],
-  folders: [{ "id": "0", "name": "Prompt Library", "type": "prompt", "disableActions": true},],
+  folders: [
+    { id: '0', name: 'Prompt Library', type: 'prompt', disableActions: true },
+  ],
   conversations: [],
   selectedConversation: undefined,
   currentMessage: undefined,
+  inputContent: '',
   prompts: [
     {
       id: '1',
       name: 'Rewriting',
-      description: 'Rewrite text with specific focus & provide alternative formulations',
-      content: 'Rewrite the {{provided text}} with a focus on {{specific aspect}}, and provide {{number of alternative}} alternative formulations that convey the same message differently.',
+      description:
+        'Rewrite text with specific focus & provide alternative formulations',
+      content:
+        'Rewrite the {{provided text}} with a focus on {{specific aspect}}, and provide {{number of alternative}} alternative formulations that convey the same message differently.',
       model: {
         id: 'gpt-4',
         name: 'GPT-4',
@@ -56,17 +61,20 @@ export const initialState: HomeInitialState = {
       },
       folderId: '0',
       disableActions: true,
-      placeholders: { // Add custom placeholders here
+      placeholders: {
+        // Add custom placeholders here
         'provided text': 'Enter the text to be rewritten...',
         'specific aspect': 'Describe the special aspect to focus...',
-        'number of alternative': 'Enter the number of alternatives you would like to generate...',
+        'number of alternative':
+          'Enter the number of alternatives you would like to generate...',
       },
     },
     {
       id: '2',
       name: 'Translating+',
       description: 'Translate with additional aspects',
-      content: 'Translate the {{provided text}} into {{target language}}, and incorporate additional information about {{specified aspect}} that aligns with the provided context.',
+      content:
+        'Translate the {{provided text}} into {{target language}}, and incorporate additional information about {{specified aspect}} that aligns with the provided context.',
       model: {
         id: 'gpt-4',
         name: 'GPT-4',
@@ -75,7 +83,8 @@ export const initialState: HomeInitialState = {
       },
       folderId: '0',
       disableActions: true,
-      placeholders: { // Add custom placeholders here
+      placeholders: {
+        // Add custom placeholders here
         'provided text': 'Enter the text to be translated...',
         'target language': 'Enter the target language...',
         'specified aspect': 'Enter the additional aspect...',

@@ -2,10 +2,15 @@ version: '3.6'
 
 services:
   chatgpt:
-    build: .
+    build: 
+      context: .
+      args:
+        DEFAULT_MODEL: ${DEFAULT_MODEL}
+        NEXT_PUBLIC_DEFAULT_SYSTEM_PROMPT: ${NEXT_PUBLIC_DEFAULT_SYSTEM_PROMPT}
+        NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL}
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY}
     ports:
       - 3000:3000
-    environment:
-      - 'OPENAI_API_KEY='
-      - 'DEFAULT_MODEL=gpt-4'
+    restart: always
+    env_file: .env.local
 

@@ -39,9 +39,6 @@ const Folder = ({
   const [isRenaming, setIsRenaming] = useState(false);
   const [renameValue, setRenameValue] = useState('');
   const [isOpen, setIsOpen] = useState(false);
-
-   // Add the console.log statement here
-  console.log(currentFolder);
   
   const handleEnterDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Enter') {

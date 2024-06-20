@@ -190,7 +190,7 @@ export const ChatMessage: FC<Props> = memo(({ message, messageIndex, onEdit }) =
                             ) : (
                                 <div className="prose whitespace-pre-wrap dark:prose-invert flex-1" style={{ color: 'black' }}>
                                     {message.content}                                    
-                                    {message.variables2 && (
+                                    {!!message?.variables2?.length && (
                                         <div className="variables-list" style={{ marginTop: '20px' }}>
                                             {message.variables2.map((variable, index) => (
                                                 <div key={index} style={{ fontSize: '0.8em', color: '#555' }}>
